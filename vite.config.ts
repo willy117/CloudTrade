@@ -13,9 +13,10 @@ export default defineConfig(({ mode }) => {
     base: './',
     define: {
       // 在 Build 階段將 process.env 替換為實際字串
-      'process.env.API_KEY': JSON.stringify(process.env.API_KEY || env.API_KEY),
-      'process.env.VITE_FINNHUB_API_KEY': JSON.stringify(process.env.VITE_FINNHUB_API_KEY || env.VITE_FINNHUB_API_KEY),
-      'process.env.VITE_FIREBASE_CONFIG_STRING': JSON.stringify(process.env.VITE_FIREBASE_CONFIG_STRING || env.VITE_FIREBASE_CONFIG_STRING),
+      // 加入 || '' 確保若變數未設定，會替換為空字串而非 undefined，避免語法錯誤
+      'process.env.API_KEY': JSON.stringify(process.env.API_KEY || env.API_KEY || ''),
+      'process.env.VITE_FINNHUB_API_KEY': JSON.stringify(process.env.VITE_FINNHUB_API_KEY || env.VITE_FINNHUB_API_KEY || ''),
+      'process.env.VITE_FIREBASE_CONFIG_STRING': JSON.stringify(process.env.VITE_FIREBASE_CONFIG_STRING || env.VITE_FIREBASE_CONFIG_STRING || ''),
       // 防止某些第三方庫引用 process.env.NODE_ENV 出錯
       'process.env.NODE_ENV': JSON.stringify(mode),
     },
